@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h2>Instagram Analyzer</h2>
+
+  <input id="username" placeholder="Instagram username" />
+
+  <button id="goFollowers">Go to Profile</button>
+  <h3>Instructions: Open up your followers and click the "Collect Followers" button. <br>Once 
+    completed, open your following and click the "Collect Following" button. <br>Finally
+    Show Who's Not Following Back
+  </h3>
+  <div class="step">
+    <button id="collectFollowers">Collect Followers</button>
+    <span id="followersStatus" class="status"></span>
+  </div>
+
+  <div class="step">
+    <button id="collectFollowing">Collect Following</button>
+    <span id="followingStatus" class="status"></span>
+  </div>
+
+  <button id="getNotFollowingBack">Show Who's Not Following Back</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

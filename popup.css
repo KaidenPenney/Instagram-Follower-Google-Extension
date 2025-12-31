@@ -1,0 +1,99 @@
+/*
+Most of this is just AI, as I feel it doesn't provide
+any new knowledge and is just simple css. Can't really master
+css and just wanted quick layout to build off of.
+*/
+
+body {
+    width: 300px;
+    background: #1f1f1f;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding: 12px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: none;
+}
+
+button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    background: #3a3a3a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+  background: #505050;
+}
+
+button:disabled {
+  background: #2a2a2a;
+  cursor: not-allowed;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status.complete {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.status.loading {
+  color: #ffcc00;
+}
+
+#insta-overlay {
+    position: fixed;
+    top: 10%;
+    right: 10px;
+    width: 300px;
+    max-height: 70%;
+    background: #1f1f1f;
+    color: white;
+    z-index: 999999;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+#insta-overlay .list {
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+}
+
+.user img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+#resultsContainer {
+  display: none;
+  margin-top: 10px;
+}
