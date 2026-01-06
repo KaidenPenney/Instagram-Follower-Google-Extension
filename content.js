@@ -1,4 +1,4 @@
-console.log("if you see this script properly injected big words ik");
+console.log("if you see this the script properly injected");
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
@@ -127,30 +127,81 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
 
     if(msg.type === "showResultsOverlay"){
-        showOverlay(msg.users);
+        try{
+            showOverlay(msg.users);
+        }catch(e){
+            console.error("Overlay wont show", e);
+        }
         //no send response needed so no return true needed
     }
 
 })
 
-//chat gpt preaching about how to do an overlay
+
+
+/**
+ * This fucntion creates an overlay, essentially a popup to the popup box
+ * that displays a list of all the usernames past in it that aren't follwing back
+ * theres a lot of html and css in here because we can't use our acutal popup.html
+ * or css for it.
+ * @param users is the array of usernames to show in overlay
+ */
 function showOverlay(users) {
-  const old = document.getElementById("insta-overlay");
-  if (old) old.remove();
+    const overlay = document.createElement("div");
+    overlay.id = "insta-overlay";
+    overlay.innerHTML = `
+        <h3>Not Following Back (${users.length})</h3>
+        <button id="closeOverlay">Close</button>
+        <div class="list" style="
+            max-height: 340px;
+            overflow-y: auto;
+            margin-top: 8px;
+        ">
+        ${users.map(u => `<div class="user">${u}</div>`).join("")}
+        </div>
+    `;
 
-  const overlay = document.createElement("div");
-  overlay.id = "insta-overlay";
+    //styles for popup box
+    overlay.style.position = "fixed";
+    overlay.style.top = "10%";
+    overlay.style.right = "10px";
+    overlay.style.left = "auto";
+    overlay.style.width = "300px";
+    overlay.style.maxHeight = "70%";
+    overlay.style.background = "#1f1f1f";
+    overlay.style.color = "white";
+    overlay.style.fontFamily = "'Lucida Console', Monaco, monospace";
+    overlay.style.fontWeight = "700";
+    // use a very large z-index to avoid being hidden by page UI
+    overlay.style.zIndex = "2147483647";
+    overlay.style.pointerEvents = "auto";
+    overlay.style.borderRadius = "8px";
+    overlay.style.padding = "10px";
+    overlay.style.boxShadow = "0 0 20px rgba(0,0,0,0.6)";
+    overlay.style.overflow = "hidden";
 
-  overlay.innerHTML = `
-    <h3>Not Following Back (${users.length})</h3>
-    <button id="closeOverlay">Close</button>
-    <div class="list">
-      ${users.map(u => `<div class="user">${u}</div>`).join("")}
-    </div>
-  `;
+    document.body.appendChild(overlay); //add in the overlay
 
-  document.body.appendChild(overlay);
+    //Force header color to white to see array size (use !important to override page styles)
+    const header = overlay.querySelector('h3');
+    header.style.setProperty('color', '#ffffff', 'important');
 
-  document.getElementById("closeOverlay").onclick = () => overlay.remove();
+    // Style the close button :)
+    const closeBtn = document.getElementById("closeOverlay");
+    if (closeBtn) { //just check if exists for debug
+        closeBtn.style.display = "block";
+        closeBtn.style.width = "100%";
+        closeBtn.style.marginTop = "8px";
+        closeBtn.style.background = "#ffffff";
+        closeBtn.style.color = "#000000";
+        closeBtn.style.fontFamily = "'Lucida Console', Monaco, monospace";
+        closeBtn.style.fontWeight = "700";
+        closeBtn.style.border = "none";
+        closeBtn.style.borderRadius = "6px";
+        closeBtn.style.padding = "8px 10px";
+        closeBtn.style.cursor = "pointer";
+    }
+
+    document.getElementById("closeOverlay").onclick = () => overlay.remove();//button to close overlay
 }
 

@@ -60,25 +60,6 @@ button:disabled {
   color: #ffcc00;
 }
 
-#insta-overlay {
-    position: fixed;
-    top: 10%;
-    right: 10px;
-    width: 300px;
-    max-height: 70%;
-    background: #1f1f1f;
-    color: white;
-    z-index: 999999;
-    border-radius: 8px;
-    padding: 10px;
-    overflow-y: auto;
-    box-shadow: 0 0 20px rgba(0,0,0,0.6);
-}
-
-#insta-overlay .list {
-    max-height: 340px;
-    overflow-y: auto;
-}
 
 .user {
     display: flex;
