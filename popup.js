@@ -1,11 +1,16 @@
+/**
+ * popup.js is the script that runs in the extension popup window.
+ * It handles user interactions and communicates with content scripts
+ * through DOM events and Chrome's messaging API.
+ */
 document.getElementById("goFollowers").onclick = async() => {
     const username = document.getElementById("username").value.trim();
-    if(!username) return alert("Ensure you're logged into Instagram and Enter a Username:");
+    if(!username) return alert("Ensure you're logged into Instagram and Enter a Username:"); //if they just press go to profile without typing username
 
     const url = `https://www.instagram.com/${username}/followers/`;
 
     const[tab]= await chrome.tabs.query({active: true, currentWindow: true}); //hey chrome what tabs you looking at
-    chrome.tabs.update(tab.id, {url});//hey chrome change it to follower tab
+    chrome.tabs.update(tab.id, {url});//hey chrome change it to go to the users profile
 }
 
 const followersStatus = document.getElementById("followersStatus");
@@ -15,12 +20,18 @@ const showResultsBtn = document.getElementById("getNotFollowingBack");
 let followersDone = false;
 let followingDone = false;
 
+/**
+ * If both followers and following collected then it works
+ * returns true or false
+ */
 function checkReady() {
     if(followersDone && followingDone){
         showResultsBtn.disabled = false;
     }
 }
 
+//when clicking follower button tells google to send message to content.js to start collecting followers
+//displays the yellow loading thing and when done changes to complete
 document.getElementById("collectFollowers").onclick = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true});
 
@@ -35,7 +46,7 @@ document.getElementById("collectFollowers").onclick = async () => {
     });
 };
 
-
+//exact same thing as above but for following
 document.getElementById("collectFollowing").onclick = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true});
 
@@ -50,6 +61,8 @@ document.getElementById("collectFollowing").onclick = async () => {
     });
 };
 
+//when clicking show results button sends message to content.js to show the overlay with results
+//with some error messages incase user skips steps
 document.getElementById("getNotFollowingBack").onclick = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     

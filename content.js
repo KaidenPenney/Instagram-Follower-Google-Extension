@@ -1,5 +1,5 @@
 console.log("if you see this the script properly injected");
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));//sleep function for async waits allow computer to load more users
 
 /**
  * This method uses an autoscroll to find and take all
@@ -65,14 +65,14 @@ const state = {
     following: null
 };
 
-//collect followers
+//collect followers using collectAllUsernames
 async function collectFollowers(){
     console.log("Collecting Followers...")
     state.followers = await collectAllUsernames();
     console.log("Followers collected:", state.followers.length);
 }
 
-//collect following
+//collect following using collectAllUsernames
 async function collectFollowing(){
     console.log("Collecting Following...");
     state.following = await collectAllUsernames();
@@ -101,7 +101,9 @@ function getNotFollowingBack(){
 
 
 
-//this is all for it to work in chrome extension
+//this is all for it to work in chrome extension by using a chrome listener
+//and waiting for messages from popup.js, hence the if statements checking the msg.type
+//and returning true for async responses when needed.
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     console.log("Received message:", msg);//see if chrome gets response
 
